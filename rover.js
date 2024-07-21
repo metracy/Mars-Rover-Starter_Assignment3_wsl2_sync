@@ -12,7 +12,50 @@ STATUS_CHECK	|No values sent with this command.	                        |       
 MODE_CHANGE	   |String representing rover mode (see modes)	               |              mode	                  |  {completed: true} 
 */    
 
-   receiveMessage(message) {
+  receiveMessage(message) {
+    let results = [];
+    
+    for (let currentCommand of message.commands) {
+
+      if (currentCommand.commandType == 'MOVE') {
+         if (this.mode != 'LOW_POWER') {
+             this.position = currentCommand.value;
+             results.push({ completed: true });
+         } else {
+             results.push({ completed: false });
+         }
+     }
+
+      else if (currentCommand.commandType == 'STATUS_CHECK') {
+        results.push({
+          completed: true,
+          roverStatus: {
+            mode: this.mode,
+            generatorWatts: this.generatorWatts,
+            position: this.position
+          }
+        });
+      }
+      
+      else if (currentCommand.commandType == 'MODE_CHANGE') {
+        this.mode = currentCommand.value;
+        results.push({ completed: true });
+      }
+      
+
+    }
+
+    return {
+      message: message.name,
+      results: results
+    };
+  }
+}
+
+
+
+
+/*      
       // start at the beginning for
       let loop_index = 0;
 
@@ -21,12 +64,12 @@ MODE_CHANGE	   |String representing rover mode (see modes)	               |     
 
       // should work for iterating over object to grab commands.
       while (loop_index < message.commands.length ) {
-         
+         if (message.commands[loop_index].isArray())
          let command = message.commands[loop_index];
          if (command.commandType == 'MOVE') {
 
          }
-      
+
          loop_index += 1;
       };
       return {
@@ -36,5 +79,5 @@ MODE_CHANGE	   |String representing rover mode (see modes)	               |     
 
    }
 }
-
+*/
 module.exports = Rover;

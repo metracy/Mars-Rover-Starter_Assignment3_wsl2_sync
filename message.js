@@ -3,7 +3,7 @@ class Message {
      if (!name) {
        throw new Error('Name required.');
      }
-     // set object names from index 0 and index 1
+     // pull from constructor
      this.name = name;
      this.commands = commands;
    }

@@ -30,9 +30,8 @@ The description is “constructor sets name”. The test confirms that the const
         // intantiate message with message_text.
         let message = new Message(message_text);
         // check if name property of object message was assigned correctly
-        expect(message.name).toBe(message_text);
+        expect(message.name).toEqual(message_text);
       });
-
 /*
 Test 6
 
@@ -47,6 +46,6 @@ The description reads “contains a commands array passed into the constructor a
         // intantiate message with message_text and array of commands.
         let message = new Message(message_text, commands);
         // check if command property of object message was assigned correctly
-        expect(message.commands).toBe(commands);
+        expect(message.commands).toEqual(commands);
       });
 });

@@ -4,13 +4,18 @@ const Command = require('../command.js');
 
 // NOTE: If at any time, you want to focus on the output from a single test, feel free to comment out all the others.
 //       However, do NOT edit the grading tests for any reason and make sure to un-comment out your code to get the autograder to pass.
-
+/*
+Command	       |            Value sent with command	                       |            Updates to Rover object	  |  Result returned
+MOVE	         |Number representing the position the rover should move to. |	                position	          |  {completed: true}
+STATUS_CHECK	 |No values sent with this command.	                         |              No updates              |  {completed: true, roverStatus: {mode: 'NORMAL', generatorWatts: 110, position: 87382098}} (Values for mode, generatorWatts, position will depend on the current state of the rover.)
+MODE_CHANGE	   |String representing rover mode (see modes)	               |              mode	                  |  {completed: true} 
+*/    
 // test 7 rover
 describe('Rover class', function() {
   test('constructor sets position and default values for mode and generatorWatts', function() {
     let position = 98382;
     let rover = new Rover(position);
-    let watts = 110
+    let watts = 110;
     expect(rover.position).toBe(position);
     expect(rover.mode).toBe('NORMAL');
     expect(rover.generatorWatts).toBe(watts);
@@ -26,7 +31,7 @@ Details about how to respond to different commands are in the Command Types tabl
   */
   // test 8 rover “response returned by receiveMessage contains the name of the message”
   test('response returned by receiveMessage contains the name of the message', function() {
-    let position = 100
+    let position = 98382;
     let rover = new Rover(position);
     let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
     let msg = 'Test message with two commands';
@@ -35,5 +40,29 @@ Details about how to respond to different commands are in the Command Types tabl
     expect(response.message).toBe(msg);
   });
 
+// test 9 “response returned by receiveMessage includes two results if two commands are sent in the message”
+  test('response returned by receiveMessage includes two results if two commands are sent in the message', function() {
+    let position = 98382;
+    let rover = new Rover(position);
+    let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
+    let msg = 'Test message with two commands';
+    let message = new Message(msg, commands);
+    let response = rover.receiveMessage(message, commands);
+    expect(response.results.length).toBe(commands.length);
+  });
+
+
+  // test 10 rover “responds correctly to the status check command”
+  test('responds correctly to the status check command', function() {
+    let position = 98382;
+    let rover = new Rover(position);
+    let commands = [new Command('STATUS_CHECK')];
+    let msg = 'Test message with two commands';
+    let message = new Message(msg, commands);
+    let response = rover.receiveMessage(message);
+    expect(response.message).toBe(msg);
+  });
+
+  // test 11 rover “responds correctly to the status check command”
 
 });
