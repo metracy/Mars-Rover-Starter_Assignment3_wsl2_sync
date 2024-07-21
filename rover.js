@@ -15,9 +15,11 @@ MODE_CHANGE	   |String representing rover mode (see modes)	               |     
    receiveMessage(message) {
       // start at the beginning for
       let loop_index = 0;
+
       // an array of results. Each element in the array is an object that corresponds to one
       let results = [];
 
+      // should work for iterating over object to grab commands.
       while (loop_index < message.commands.length ) {
          
          let command = message.commands[loop_index];
