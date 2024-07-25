@@ -6,10 +6,7 @@ class Rover {
       this.generatorWatts = 110;
    }
 
-
-
-
-  receiveMessage(message) {
+   receiveMessage(message) {
     let results = [];
     // iterate over content of message.commands
     for (let currentCommand of message.commands) {
@@ -48,7 +45,6 @@ MODE_CHANGE	  | String representing rover mode (see modes)	   |   mode	         
         this.mode = currentCommand.value;
         results.push({ completed: true });
       }
-      
 
     }
 
