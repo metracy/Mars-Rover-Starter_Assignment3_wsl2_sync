@@ -5,7 +5,7 @@ let Command = require('../command.js');
 
 describe("Command class", function() {
 
-// command test-1
+// command throws error if command type is NOT passed into constructor as the first parameter
 
   test("throws error if command type is NOT passed into constructor as the first parameter", function () {
     // carrie's video rewritten easier to read

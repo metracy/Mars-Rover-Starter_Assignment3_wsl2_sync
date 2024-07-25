@@ -14,6 +14,7 @@ MODE_CHANGE	   |String representing rover mode (see modes)	               |     
 describe('Rover class', function() {
   test('constructor sets position and default values for mode and generatorWatts', function() {
     let position = 98382;
+    // need to instantiate an object from class Rover, the rover needs one position to instantiate
     let rover = new Rover(position);
     let watts = 110;
     expect(rover.position).toBe(position);
@@ -63,6 +64,54 @@ Details about how to respond to different commands are in the Command Types tabl
     expect(response.message).toBe(msg);
   });
 
-  // test 11 rover “responds correctly to the status check command”
+  // test 11 rover “responds correctly to the mode change command”
 
+  test('responds correctly to the mode change command', function() {
+    let position = 98382;
+    let rover = new Rover(position);
+    let commands = [new Command('MODE_CHANGE', 'LOW_POWER')];
+    let message = new Message('Lower the power to LOW_POWER', commands);
+    let responseoToLow = rover.receiveMessage(message);
+    expect(responseoToLow.results[0].completed).toBe(true);
+    expect(rover.mode).toBe('LOW_POWER');
+    console.log("Rover Mode after changing to LOW_POWER:", rover.mode);
+    let commands2 = [new Command('MODE_CHANGE', 'NORMAL')];
+    let message2 = new Message('Raise the power to NORMAL', commands2);
+    let responseToNorm = rover.receiveMessage(message2);
+    expect(responseToNorm.results[0].completed).toBe(true);
+    expect(rover.mode).toBe('NORMAL');
+    console.log("Rover Mode after changing to LOW_POWER:", rover.mode);
+  });
+
+  // test 12 rover “responds with a false completed value when attempting to move in LOW_POWER mode”
+
+  test('responds with a false completed value when attempting to move in LOW_POWER mode', function() {
+    let position = 98382;
+    let newPosition = 1337;
+    let rover = new Rover(position);
+    rover.mode = 'LOW_POWER'; 
+
+    let commands = [new Command('MOVE', newPosition)];
+    let message = new Message(`Move to ${newPosition}`, commands);
+    let response = rover.receiveMessage(message);
+    expect(response.results[0].completed).toEqual(false);
+  });
+
+// test 13 “responds with the position for the move command”
+// A MOVE command will update the rover’s position with the position value in the command.
+  
+  test('responds with the position for the move command', function() {
+    let position = 98382; 
+    let newPosition = 99999;
+    let commands = [new Command('MOVE', newPosition)];
+    let message = new Message(`Move to new loc`, commands);
+    let rover = new Rover(position, message);
+    rover.mode = 'NORMAL';
+    let response = rover.receiveMessage(message);
+    expect(response.results[0].completed).toEqual(true);
+    expect(rover.position).toBe(newPosition);
+  });
 });
+
+
+
