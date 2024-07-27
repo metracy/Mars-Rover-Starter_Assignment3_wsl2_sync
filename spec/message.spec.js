@@ -26,7 +26,7 @@ The description is “constructor sets name”. The test confirms that the const
     test("constructor sets name", function() {
         // use example message_text
         let message_text = 'Test message'
-        // intantiate message with message_text.
+        // instantiate message with message_text.
         let message = new Message(message_text);
         // check if name property of object message was assigned correctly
         expect(message.name).toEqual(message_text);

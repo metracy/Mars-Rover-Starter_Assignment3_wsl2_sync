@@ -61,7 +61,7 @@ Details about how to respond to different commands are in the Command Types tabl
     let msg = 'Test message with two commands';
     let message = new Message(msg, commands);
     let response = rover.receiveMessage(message);
-    expect(response.message).toBe(msg);
+    expect(response.results).toEqual([{"completed": true, "roverStatus": {"generatorWatts": 110, "mode": "NORMAL", "position": position}}]);
   });
 
   // test 11 rover “responds correctly to the mode change command”
@@ -69,18 +69,18 @@ Details about how to respond to different commands are in the Command Types tabl
   test('responds correctly to the mode change command', function() {
     let position = 98382;
     let rover = new Rover(position);
-    let commands = [new Command('MODE_CHANGE', 'LOW_POWER')];
-    let message = new Message('Lower the power to LOW_POWER', commands);
-    let responseoToLow = rover.receiveMessage(message);
-    expect(responseoToLow.results[0].completed).toBe(true);
-    expect(rover.mode).toBe('LOW_POWER');
+    let command1 = [new Command('MODE_CHANGE', 'LOW_POWER')];
+    let message = new Message('Lower the power to LOW_POWER', command1);
+    let responseToLow = rover.receiveMessage(message);
+    expect(responseToLow.results[0].completed).toBe(true);
+    expect(rover.mode).toEqual('LOW_POWER');
     console.log("Rover Mode after changing to LOW_POWER:", rover.mode);
     let commands2 = [new Command('MODE_CHANGE', 'NORMAL')];
     let message2 = new Message('Raise the power to NORMAL', commands2);
     let responseToNorm = rover.receiveMessage(message2);
     expect(responseToNorm.results[0].completed).toBe(true);
-    expect(rover.mode).toBe('NORMAL');
-    console.log("Rover Mode after changing to LOW_POWER:", rover.mode);
+    expect(rover.mode).toEqual('NORMAL');
+    console.log("Rover Mode after changing to NORMAL:", rover.mode);
   });
 
   // test 12 rover “responds with a false completed value when attempting to move in LOW_POWER mode”

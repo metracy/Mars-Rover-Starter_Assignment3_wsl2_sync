@@ -1,5 +1,5 @@
 class Rover {
-// easy part - just take in position and message and set default values
+// easy part - just take in position and message (not necessary) and set default values
    constructor(position, message) {
       this.position = position;
       this.mode = 'NORMAL';
@@ -61,7 +61,6 @@ MODE_CHANGE	  | String representing rover mode (see modes)	   |   mode	         
 /*      
       // start at the beginning for
       let loop_index = 0;
-
       // an array of results. Each element in the array is an object that corresponds to one
       let results = [];
 
