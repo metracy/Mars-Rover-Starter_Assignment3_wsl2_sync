@@ -6,10 +6,8 @@ const Command = require('../command.js');
 
 describe("Message class", function() {
 /*
-Test 4
-
+! Test 4
 This test description is “throws error if a name is NOT passed into the constructor as the first parameter”. Review the first test in command.spec.js for an example of how this test works.
-
 Look at the code in command.js. Use that to help you write the Message class in message.js so that your test passes. Refer to the Message Class description above for more details.
 */
     // message test 4
@@ -18,7 +16,8 @@ Look at the code in command.js. Use that to help you write the Message class in 
         expect(instantiateMessage).toThrow(new Error('Name required.'));
     });
 /*
-Test 5
+
+! Test 5
 
 The description is “constructor sets name”. The test confirms that the constructor in the Message class correctly sets the name property in a new message object.
 */  
@@ -33,10 +32,8 @@ The description is “constructor sets name”. The test confirms that the const
         expect(message.name).toEqual(message_text);
       });
 /*
-Test 6
-
+! Test 6
 The description reads “contains a commands array passed into the constructor as the 2nd argument”. This test confirms that the commands property of a new message object contains the data passed in from the Message(name, commands) call.
-
 */  
       test("contains a commands array passed into the constructor as the 2nd argument", function() {
         // using example from instruction sheet, instantiate commands array

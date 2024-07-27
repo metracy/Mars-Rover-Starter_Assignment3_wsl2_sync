@@ -94,7 +94,7 @@ Details about how to respond to different commands are in the Command Types tabl
     let commands = [new Command('MOVE', newPosition)];
     let message = new Message(`Move to ${newPosition}`, commands);
     let response = rover.receiveMessage(message);
-    expect(response.results[0].completed).toEqual(false);
+    expect(response.results[0].completed).toBe(false);
   });
 
 // test 13 “responds with the position for the move command”
@@ -108,7 +108,7 @@ Details about how to respond to different commands are in the Command Types tabl
     let rover = new Rover(position, message);
     rover.mode = 'NORMAL';
     let response = rover.receiveMessage(message);
-    expect(response.results[0].completed).toEqual(true);
+    expect(response.results[0].completed).toBe(true);
     expect(rover.position).toBe(newPosition);
   });
 });
