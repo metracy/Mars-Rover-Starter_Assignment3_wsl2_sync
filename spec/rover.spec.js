@@ -10,7 +10,7 @@ MOVE	         |Number representing the position the rover should move to. |	    
 STATUS_CHECK	 |No values sent with this command.	                         |              No updates              |  {completed: true, roverStatus: {mode: 'NORMAL', generatorWatts: 110, position: 87382098}} (Values for mode, generatorWatts, position will depend on the current state of the rover.)
 MODE_CHANGE	   |String representing rover mode (see modes)	               |              mode	                  |  {completed: true} 
 */    
-// test 7 rover
+//# test 7 rover - “constructor sets position and default values for mode and generatorWatts”
 describe('Rover class', function() {
   test('constructor sets position and default values for mode and generatorWatts', function() {
     let position = 98382;
@@ -30,7 +30,7 @@ results: an array of results. Each element in the array is an object that corres
 Updates certain properties of the rover object
 Details about how to respond to different commands are in the Command Types table.
   */
-  // test 8 rover “response returned by receiveMessage contains the name of the message”
+//# test 8 rover “response returned by receiveMessage contains the name of the message”
   test('response returned by receiveMessage contains the name of the message', function() {
     let position = 98382;
     let rover = new Rover(position);
@@ -41,7 +41,7 @@ Details about how to respond to different commands are in the Command Types tabl
     expect(response.message).toBe(msg);
   });
 
-// test 9 “response returned by receiveMessage includes two results if two commands are sent in the message”
+//# test 9 “response returned by receiveMessage includes two results if two commands are sent in the message”
   test('response returned by receiveMessage includes two results if two commands are sent in the message', function() {
     let position = 98382;
     let rover = new Rover(position);
@@ -53,7 +53,7 @@ Details about how to respond to different commands are in the Command Types tabl
   });
 
 
-  // test 10 rover “responds correctly to the status check command”
+  //# test 10 rover “responds correctly to the status check command”
   test('responds correctly to the status check command', function() {
     let position = 98382;
     let rover = new Rover(position);
@@ -64,14 +64,14 @@ Details about how to respond to different commands are in the Command Types tabl
     expect(response.results).toEqual([{"completed": true, "roverStatus": {"generatorWatts": 110, "mode": "NORMAL", "position": position}}]);
   });
 
-  // test 11 rover “responds correctly to the mode change command”
+  //# test 11 rover “responds correctly to the mode change command”
 
   test('responds correctly to the mode change command', function() {
     let position = 98382;
     let rover = new Rover(position);
     let command1 = [new Command('MODE_CHANGE', 'LOW_POWER')];
-    let message = new Message('Lower the power to LOW_POWER', command1);
-    let responseToLow = rover.receiveMessage(message);
+    let message1 = new Message('Lower the power to LOW_POWER', command1);
+    let responseToLow = rover.receiveMessage(message1);
     expect(responseToLow.results[0].completed).toBe(true);
     expect(rover.mode).toEqual('LOW_POWER');
     console.log("Rover Mode after changing to LOW_POWER:", rover.mode);
@@ -83,7 +83,7 @@ Details about how to respond to different commands are in the Command Types tabl
     console.log("Rover Mode after changing to NORMAL:", rover.mode);
   });
 
-  // test 12 rover “responds with a false completed value when attempting to move in LOW_POWER mode”
+  //# test 12 rover “responds with a false completed value when attempting to move in LOW_POWER mode”
 
   test('responds with a false completed value when attempting to move in LOW_POWER mode', function() {
     let position = 98382;
@@ -97,8 +97,8 @@ Details about how to respond to different commands are in the Command Types tabl
     expect(response.results[0].completed).toBe(false);
   });
 
-// test 13 “responds with the position for the move command”
-// A MOVE command will update the rover’s position with the position value in the command.
+//# test 13 “responds with the position for the move command”
+// A MOVE command will update the rover's position with the position value in the command.
   
   test('responds with the position for the move command', function() {
     let position = 98382; 
