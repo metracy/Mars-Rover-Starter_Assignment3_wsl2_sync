@@ -38,6 +38,8 @@ Details about how to respond to different commands are in the Command Types tabl
     let msg = 'Test message with two commands';
     let message = new Message(msg, commands);
     let response = rover.receiveMessage(message);
+    console.log(`${JSON.stringify(response.message)} ?= ${JSON.stringify(msg)}`)
+    console.log(`${typeof response.message} ?= ${typeof msg}`)
     expect(response.message).toBe(msg);
   });
 
@@ -49,6 +51,7 @@ Details about how to respond to different commands are in the Command Types tabl
     let msg = 'Test message with two commands';
     let message = new Message(msg, commands);
     let response = rover.receiveMessage(message, commands);
+    console.log(`${JSON.stringify(response.results)} ?= ${JSON.stringify(commands)}`)
     expect(response.results.length).toBe(commands.length);
   });
 
@@ -61,7 +64,7 @@ Details about how to respond to different commands are in the Command Types tabl
     let msg = 'Test message with two commands';
     let message = new Message(msg, commands);
     let response = rover.receiveMessage(message);
-    console.log(response.results[0])
+    console.log(typeof ({"completed": true, "roverStatus": {"generatorWatts": 110, "mode": "NORMAL", "position": position}}))
     expect(response.results[0]).toEqual({"completed": true, "roverStatus": {"generatorWatts": 110, "mode": "NORMAL", "position": position}});
   });
 
@@ -106,9 +109,14 @@ Details about how to respond to different commands are in the Command Types tabl
     let newPosition = 99999;
     let commands = [new Command('MOVE', newPosition)];
     let message = new Message(`Move to new loc`, commands);
+    //# instantiate with rover old position. 
     let rover = new Rover(position, message);
+    //# redundant make sure is normal mode
     rover.mode = 'NORMAL';
+    //# get response from receiveMessage
     let response = rover.receiveMessage(message);
+    console.log(JSON.stringify(response))
+    console.log(JSON.stringify(response.results))
     expect(response.results[0].completed).toBe(true);
     expect(rover.position).toBe(newPosition);
   });

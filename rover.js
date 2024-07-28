@@ -18,7 +18,9 @@ MOVE	        | Number representing the position the rover should move to. |   po
       if (currentCommand.commandType == 'MOVE') {
          if (this.mode == 'NORMAL') {
              this.position = currentCommand.value;
-             results.push({ completed: true });
+             results.push({ completed: true,
+              position: this.position
+              });
          } else {
              results.push({ completed: false });
          }
