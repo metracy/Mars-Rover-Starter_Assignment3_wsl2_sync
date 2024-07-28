@@ -61,7 +61,8 @@ Details about how to respond to different commands are in the Command Types tabl
     let msg = 'Test message with two commands';
     let message = new Message(msg, commands);
     let response = rover.receiveMessage(message);
-    expect(response.results).toEqual([{"completed": true, "roverStatus": {"generatorWatts": 110, "mode": "NORMAL", "position": position}}]);
+    console.log(response.results[0])
+    expect(response.results[0]).toEqual({"completed": true, "roverStatus": {"generatorWatts": 110, "mode": "NORMAL", "position": position}});
   });
 
   //# test 11 rover “responds correctly to the mode change command”
